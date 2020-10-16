@@ -18,7 +18,7 @@ def main():
     val_index = []
 
     # load dataframe with account ids and party affiliation
-    accounts = pd.read_csv('accounts.csv')
+    accounts = pd.read_csv(os.path.join(dir_path,'accounts.csv'))
 
     # get the id of republican accounts
     rep_names = accounts.loc[accounts['Party']=='R']['Handle'].unique()
@@ -31,7 +31,7 @@ def main():
     dem_names
 
     # open file with tweets
-    with open('tweets.jsonl', 'r') as json_lines:
+    with open(os.path.join(dir_path,'tweets.jsonl'), 'r') as json_lines:
         # itereate over all lines
         while True:
             tweet = json_lines.readline()
