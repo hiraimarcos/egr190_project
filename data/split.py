@@ -1,6 +1,5 @@
-import os, random
+import os, random, json
 import pandas as pd
-import json
 
 random.seed(0)
 
@@ -22,14 +21,14 @@ def main():
     accounts = pd.read_csv('accounts.csv')
 
     # get the id of republican accounts
-    rep_ids = accounts.loc[accounts['Party']=='R']['Uid'].unique()
-    rep_ids = set(rep_ids)
-    rep_ids
+    rep_names = accounts.loc[accounts['Party']=='R']['Handle'].unique()
+    rep_names = set(rep_names)
+    rep_names
 
     # get id of democratic accounts
-    dem_ids = accounts.loc[accounts['Party']=='D']['Uid'].unique()
-    dem_ids = set(dem_ids)
-    dem_ids
+    dem_names = accounts.loc[accounts['Party']=='D']['Handle'].unique()
+    dem_names = set(dem_names)
+    dem_names
 
     # open file with tweets
     with open('tweets.jsonl', 'r') as json_lines:
@@ -40,9 +39,11 @@ def main():
             if tweet == "":
                 break
 
+            tweet = json.loads(tweet)
+
             # only get relevant information from json
             text = tweet['full_text']
-            user_id = tweet['user']['id']
+            username = str(tweet['user']['screen_name'])
             tweet_id = tweet['id']
             filename = f"{str(tweet_id)}.txt"
 
@@ -56,36 +57,45 @@ def main():
             if seed < TRAIN_SPLIT:
                 train_index.append(tweet_id)
                 # determine whether author was rep or dem
-                if user_id in rep_ids:
+                if username in rep_names:
                     path = os.path.join(os.path.join(train_dir, "republican"),
                         filename)
-                elif user_id in dem_ids:
+                elif username in dem_names:
                     path = os.path.join(os.path.join(train_dir, "democrat"),
                         filename)
 
             # tweet goes to test set
-            if seed < TEST_SPLIT:
+            elif seed < TEST_SPLIT:
                 test_index.append(tweet_id)
-                if user_id in rep_ids:
+                if username in rep_names:
                     path = os.path.join(os.path.join(test_dir, "republican"),
                         filename)
-                elif user_id in dem_ids:
+                elif username in dem_names:
                     path = os.path.join(os.path.join(test_dir, "democrat"),
                         filename)
 
             # tweet goes to validation set
             else:
                 val_index.append(tweet_id)
-                if user_id in rep_ids:
+                if username in rep_names:
                     path = os.path.join(os.path.join(val_dir, "republican"),
                         filename)
-                elif user_id in dem_ids:
+                    
+                elif username in dem_names:
                     path = os.path.join(os.path.join(val_dir, "democrat"),
                         filename)
-            
+                    
             if path:
                 with open(path, 'w') as f:
                     f.write(text)
+
+    test_index = pd.Series(test_index)
+    test_index.to_csv(os.path.join(test_dir, 'index.csv'))
+    train_index = pd.Series(train_index)
+    train_index.to_csv(os.path.join(train_dir, 'index.csv'))
+    val_index = pd.Series(val_index)
+    val_index.to_csv(os.path.join(val_dir, 'index.csv'))
                 
 
 if __name__ == "__main__":
+    main()
