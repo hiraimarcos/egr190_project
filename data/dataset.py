@@ -1,14 +1,15 @@
-import torch, np
+import torch
 import os
 import pandas as pd
 import preprocessor as p
+import numpy as np
 from nltk.tokenize.casual import TweetTokenizer
 from torch.utils.data import Dataset
 from .embedding import word2vec
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
-class TweeterData(Dataset):
+class TweeterData_v0(Dataset):
     """
     This is the class for our dataset.
     When creating an instance of this dataset, select test, val, or train
@@ -54,15 +55,19 @@ class TweeterData(Dataset):
             with open(rep_path, 'r') as f:
                 text = f.read()
                 label = 0 # choose republican -> 0
-        elif os.path.exists(rdem_path):
+        elif os.path.exists(dem_path):
             with open(dem_path, 'r') as f:
                 text = f.read()
                 label = 1 # choose democrat -> 1
 
-        # clean the tweet
+        # clean the tweet (erase mentions, hashtags, URLs, numbers)
         text = self.clean(text)
         # split into words and punctuation
         tokenized = self.tokenizer.tokenize(text)
+
+        # crop if length is greater than 100
+        if len(tokenized)>100:
+            tokenized = tokenized[:100]
 
         vectors = []
         for word in tokenized:
@@ -75,12 +80,11 @@ class TweeterData(Dataset):
             else:
                 vectors.append(np.zeros(300))
 
-        # crop tweet or add padding to ensure all data points have the same size
-        if len(vectors)>100:
-            vectors = vectors[:100]
         # pad if len < 100
-        else:
+        if len(vectors) < 100:
             zeros = [np.zeros(300) for i in range(100-len(vectors))]
             vectors = vectors + zeros
 
-        return {'text':np.stack(vectors), 'label':label}
+        sample = (torch.tensor(np.stack(vectors)), label)
+
+        return sample
