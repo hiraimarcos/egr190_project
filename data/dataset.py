@@ -1,5 +1,5 @@
 import torch
-import os
+import os, re
 import pandas as pd
 import preprocessor as p
 import numpy as np
@@ -26,11 +26,11 @@ class TweeterData_v0(Dataset):
                                     names=['Tweet_id'], header=0)
 
         # cleans tweet before we can tokenize
+        p.set_options(p.OPT.URL) # remove only URLs
         self.clean = p.clean
 
-        # function that splits tweets into words and punctuation
-        # turns everything into lower case
-        self.tokenizer = TweetTokenizer(preserve_case=False)
+        # patter that identifies all but alphanumeric characters and spaces
+        self.pattern = re.compile(r'([^\s\w]|_)+')
 
         # get dict that maps word to embeddings
         self.embeddings = word2vec()
@@ -60,17 +60,31 @@ class TweeterData_v0(Dataset):
                 text = f.read()
                 label = 1 # choose democrat -> 1
 
-        # clean the tweet (erase mentions, hashtags, URLs, numbers)
+        tweets = self.clean_words(text)
+        embeddings = self.embed(tweets)
+        sample = (embeddings, label)
+        return sample
+
+    # cleans the tweet and return split version
+    def clean_words(self, tweet):
+        #  remove urls
         text = self.clean(text)
-        # split into words and punctuation
-        tokenized = self.tokenizer.tokenize(text)
 
-        # crop if length is greater than 100
-        if len(tokenized)>100:
-            tokenized = tokenized[:100]
+        # remove all but alphanumeric and spaces and split tweet
+        text = self.pattern.sub("", text).split()
 
+        # pad or crop so output has length 30
+        if len(text) > 30:
+            text = text[:30]
+        if len(text) < 30:
+            zeros = ['0' for _ in range(30-len(text))]
+            text += zeros
+        return text
+
+    # returns tensor with word embeddings from a list of words
+    def embed(self, tweets)
         vectors = []
-        for word in tokenized:
+        for word in tweets:
             # if word has embedding add the embedding
             if word in self.embeddings:
                 vectors.append(self.embeddings[word])
@@ -79,13 +93,4 @@ class TweeterData_v0(Dataset):
             # basically ignoring the words for which we don't have an embedding)
             else:
                 vectors.append(np.zeros(300))
-
-        # pad if len < 100
-        if len(vectors) < 100:
-            zeros = [np.zeros(300) for i in range(100-len(vectors))]
-            vectors = vectors + zeros
-
-        # here we use view so that the output is of form (channels,length)
-        sample = (torch.tensor(np.stack(vectors)).view(300,100), label)
-
-        return sample
+        return torch.tensor(np.stack(vectors)).view(300,30)
