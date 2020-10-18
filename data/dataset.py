@@ -85,6 +85,7 @@ class TweeterData_v0(Dataset):
             zeros = [np.zeros(300) for i in range(100-len(vectors))]
             vectors = vectors + zeros
 
-        sample = (torch.tensor(np.stack(vectors)), label)
+        # here we use view so that the output is of form (channels,length)
+        sample = (torch.tensor(np.stack(vectors)).view(300,100), label)
 
         return sample
