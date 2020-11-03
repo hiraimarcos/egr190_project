@@ -11,3 +11,6 @@ data/numberbatch-en-19.08.txt
 *.gz
 *.h5
 __pycache__
+*.zip
+.idea
+.vscode
