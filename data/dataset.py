@@ -45,23 +45,21 @@ class TweeterData_v0(Dataset):
     def __getitem__(self, id):
         # get tweet id from given index
         tweet_id = self.index.iloc[id]['Tweet_id']
+        label = int(self.index.iloc[id]['Party']=="D")
 
         # check whether this tweet was made by republican or democrat
         # and get the text
         filename = f"{tweet_id}.txt"
-        rep_path = os.path.join(self.path, "republican", filename)
-        dem_path = os.path.join(self.path, "democrat", filename)
-        if os.path.exists(rep_path):
-            with open(rep_path, 'r') as f:
-                text = f.read()
-                label = 0 # choose republican -> 0
-        elif os.path.exists(dem_path):
-            with open(dem_path, 'r') as f:
-                text = f.read()
-                label = 1 # choose democrat -> 1
+        if label:
+            path = os.path.join(self.path, "democrat", filename)
+        else:
+            path = os.path.join(self.path, "republican", filename)
+
+        with open(path, "r") as f:
+            text = f.read()
 
         tweets = self.clean_words(text)
-        embeddings = self.embed(tweets)
+        embeddings = self.embed(tweets) # this has to change
         sample = (embeddings, label)
         return sample
 
