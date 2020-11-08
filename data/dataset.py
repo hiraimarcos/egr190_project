@@ -3,7 +3,6 @@ import os, re
 import pandas as pd
 import preprocessor as p
 import numpy as np
-from nltk.tokenize.casual import TweetTokenizer
 from torch.utils.data import Dataset
 from .embedding import word2vec
 
@@ -39,11 +38,9 @@ class TweeterData_v0(Dataset):
         return len(self.index)
 
 
-    # for now this function will return the text itself\
-    # NEED TO ADJUST, so it tekenizes and adds padding, and returns a
-    # list of word embeddings
+    # Returns the tokenized text and label of the entry with the given id
     def __getitem__(self, id):
-        # get tweet id from given index
+        # get tweet id from index
         tweet_id = self.index.iloc[id]['Tweet_id']
         label = int(self.index.iloc[id]['Party']=="D")
 
@@ -58,13 +55,12 @@ class TweeterData_v0(Dataset):
         with open(path, "r") as f:
             text = f.read()
 
-        tweets = self.clean_words(text)
-        embeddings = self.embed(tweets) # this has to change
-        sample = (embeddings, label)
+        tweets = self.tokenize(text)
+        sample = (tweets, label)
         return sample
 
     # cleans the tweet and return split version
-    def clean_words(self, tweet):
+    def tokenize(self, text):
         #  remove urls
         text = self.clean(text)
 
@@ -75,8 +71,8 @@ class TweeterData_v0(Dataset):
         if len(text) > 30:
             text = text[:30]
         if len(text) < 30:
-            zeros = ['0' for _ in range(30-len(text))]
-            text += zeros
+            pad = ['<pad>' for _ in range(30-len(text))]
+            text += pad
         return text
 
     # returns tensor with word embeddings from a list of words
