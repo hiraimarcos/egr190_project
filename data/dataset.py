@@ -14,8 +14,9 @@ class TweeterData_v0(Dataset):
     When creating an instance of this dataset, select test, val, or train
     as the setname
     """
-    def __init__(self, setname):
+    def __init__(self, setname, example_length=30):
         assert setname in ['train', 'test', 'val']
+        self.example_length = example_length
         self.setname = setname
         self.path = os.path.join(dir_path, setname)
         index = os.path.join(self.path, 'index.csv')
@@ -68,10 +69,10 @@ class TweeterData_v0(Dataset):
         text = self.pattern.sub("", text).split()
 
         # pad or crop so output has length 30
-        if len(text) > 30:
-            text = text[:30]
-        if len(text) < 30:
-            pad = ['<pad>' for _ in range(30-len(text))]
+        if len(text) > self.example_length:
+            text = text[:self.example_length]
+        if len(text) < self.example_length:
+            pad = ['<pad>' for _ in range(self.example_length-len(text))]
             text += pad
         return text
 
