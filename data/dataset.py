@@ -8,7 +8,7 @@ from .embedding import word2vec
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
-class TweeterData_v0(Dataset):
+class TweeterData(Dataset):
     """
     This is the class for our dataset.
     When creating an instance of this dataset, select test, val, or train
