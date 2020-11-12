@@ -14,7 +14,7 @@ class TweeterData(Dataset):
     When creating an instance of this dataset, select test, val, or train
     as the setname
     """
-    def __init__(self, setname, example_length=30, embeddings):
+    def __init__(self, setname, embeddings, example_length=30):
         assert setname in ['train', 'test', 'val']
         self.example_length = example_length
         self.setname = setname
