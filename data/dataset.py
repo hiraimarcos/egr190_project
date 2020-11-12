@@ -77,7 +77,7 @@ class TweeterData(Dataset):
         return text
 
     # returns tensor with word embeddings from a list of words
-    def embed(self, tweets)
+    def embed(self, tweets):
         vectors = []
         for word in tweets:
             # if word has embedding add the embedding
