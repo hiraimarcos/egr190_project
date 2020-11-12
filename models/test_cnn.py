@@ -21,7 +21,6 @@ class CNN_1CONV(nn.Module):
 
     def forward(self,x):
         size = len(x)
-        x = self.embed(x)
         # first convolution
         x = self.conv(x)
         x = self.relu(x)
@@ -41,12 +40,6 @@ class CNN_1CONV(nn.Module):
 
         # here we use view to make sure the output is a 1d array
         return x.view(size)
-
-        def embed(self, x):
-            vecs = [embedding[i] for i in x]
-            vecs = np.stack(vecs)
-            vecs = torch.tensor(vecs).t()
-            return vecs
 
 class CNN_2CONV(nn.Module):
     def __init__(self, embedding, kernel_size, in_length):
@@ -72,9 +65,7 @@ class CNN_2CONV(nn.Module):
         self.fc2 = nn.Linear(200, 1)
 
     def forward(self, x):
-        # turn words into vectors
-        x = self.embed(x)
-
+        size = len(x)
         # first convolutional layer
         x = self.conv1(x)
         x = self.relu(x)
@@ -92,13 +83,5 @@ class CNN_2CONV(nn.Module):
 
         # second fully connected layer
         x = self.fc2(x)
-        
-        return x
 
-
-
-    def embed(self, x):
-        vecs = [embedding[i] for i in x]
-        vecs = np.stack(vecs)
-        vecs = torch.tensor(vecs).t()
-        return vecs
+        return x.view(size)

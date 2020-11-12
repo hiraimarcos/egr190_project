@@ -14,7 +14,7 @@ class TweeterData(Dataset):
     When creating an instance of this dataset, select test, val, or train
     as the setname
     """
-    def __init__(self, setname, example_length=30):
+    def __init__(self, setname, example_length=30, embeddings):
         assert setname in ['train', 'test', 'val']
         self.example_length = example_length
         self.setname = setname
@@ -33,7 +33,7 @@ class TweeterData(Dataset):
         self.pattern = re.compile(r'([^\s\w]|_)+')
 
         # get dict that maps word to embeddings
-        self.embeddings = word2vec()
+        self.embeddings = embeddings
 
     def __len__(self):
         return len(self.index)
@@ -56,8 +56,8 @@ class TweeterData(Dataset):
         with open(path, "r") as f:
             text = f.read()
 
-        tweets = self.tokenize(text)
-        sample = (tweets, label)
+        tweets = self.tokenize(text) # this function will also pad/crop
+        sample = (self.embed(tweets), label)
         return sample
 
     # cleans the tweet and return split version
@@ -77,15 +77,8 @@ class TweeterData(Dataset):
         return text
 
     # returns tensor with word embeddings from a list of words
-    def embed(self, tweets):
-        vectors = []
-        for word in tweets:
-            # if word has embedding add the embedding
-            if word in self.embeddings:
-                vectors.append(self.embeddings[word])
-
-            # if word doesn't have embedding use array of zeroes (we're
-            # basically ignoring the words for which we don't have an embedding)
-            else:
-                vectors.append(np.zeros(300))
-        return torch.tensor(np.stack(vectors)).view(300,30)
+    def embed(self, tweet):
+        vectors = [self.embeddings[word] for word in tweet]
+        vectors = torch.tensor(np.stack(vectors))
+        vectors = vectors.t() # this is done to correct dimensions
+        return vectors
