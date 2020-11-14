@@ -16,7 +16,7 @@ class CNN_1CONV_MAX_NONSTATIC(nn.Module):
 
         # 1d convolutional layer
         self.conv = nn.Conv1d(
-            in_channels, 300,
+            embedding_dim, 300,
             kernel_size=kernel_size,
             padding=math.floor(kernel_size/2),
         )
