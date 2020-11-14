@@ -15,7 +15,7 @@ class CNN_1CONV(nn.Module):
         maxpool_out = math.floor(1+(conv1_out-5)/5)
         self.relu = nn.ReLU()
         self.flatten = nn.Flatten()
-        self.fc1 = nn.Linear(maxpool_out * 100, 100)
+        self.fc1 = nn.Linear(maxpool_out * 10000, 100)
         self.fc2 = nn.Linear(100, 1)
 
     def forward(self,x):
