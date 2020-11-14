@@ -31,9 +31,6 @@ class TweeterDataNonstatic(Dataset):
         # patter that identifies all but alphanumeric characters and spaces
         self.pattern = re.compile(r'([^\s\w]|_)+')
 
-        # get dict that maps word to embeddings
-        self.embeddings = embeddings
-
     def __len__(self):
         return len(self.index)
 
