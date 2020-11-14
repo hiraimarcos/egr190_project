@@ -6,7 +6,7 @@ class CNN_1CONV(nn.Module):
         super().__init__()
         # 1d convolutional layer
         self.conv = nn.Conv1d(
-            in_channels, 100,
+            in_channels, 10000,
             kernel_size=kernel_size,
             padding=math.floor(kernel_size/2),
         )
@@ -46,13 +46,13 @@ class CNN_2CONV(nn.Module):
         self.relu = nn.ReLU()
         self.flatten = nn.Flatten()
         self.conv1 = nn.Conv1d(
-            200, 200,
+            200, 2000,
             kernel_size = kernel_size,
             padding = math.floor(kernel_size/2),
         )
         conv1_out = math.floor((in_length+2*math.floor(kernel_size/2)-kernel_size) + 1)
         self.conv2 = nn.Conv1d(
-            200, 100,
+            2000, 100,
             kernel_size=5,
             stride=5
         )
@@ -71,7 +71,6 @@ class CNN_2CONV(nn.Module):
 
         # flatten feature maps
         x = self.flatten(x)
-        print(x.shape)
         # first fully connected layer
         x = self.fc1(x)
         x = self.relu(x)
