@@ -15,7 +15,7 @@ class TweeterData(Dataset):
     as the setname
     """
     def __init__(self, setname, embeddings, example_length=30):
-        assert setname in ['train', 'test', 'val']
+        assert setname in ['train1', 'train2', 'train3', 'train4', 'test', 'val']
         self.example_length = example_length
         self.setname = setname
         self.path = os.path.join(dir_path, setname)

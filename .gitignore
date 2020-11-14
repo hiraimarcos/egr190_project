@@ -7,6 +7,10 @@
 data/test
 data/val
 data/train
+data/train1
+data/train2
+data/train3
+data/train4
 data/numberbatch-en-19.08.txt
 *.gz
 *.h5
@@ -14,3 +18,4 @@ __pycache__
 *.zip
 .idea
 .vscode
+data/split_train.py
