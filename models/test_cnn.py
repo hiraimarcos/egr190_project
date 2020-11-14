@@ -2,7 +2,7 @@ import torch.nn as nn
 import math
 
 class CNN_1CONV(nn.Module):
-    def __init__(self, embedding, in_channels, kernel_size, in_length, stride):
+    def __init__(self, in_channels, kernel_size, in_length, stride):
         super().__init__()
         # 1d convolutional layer
         self.conv = nn.Conv1d(
@@ -42,7 +42,7 @@ class CNN_1CONV(nn.Module):
         return x.view(size)
 
 class CNN_2CONV(nn.Module):
-    def __init__(self, embedding, kernel_size, in_length):
+    def __init__(self, kernel_size, in_length):
         super().__init__()
         self.embedding = embedding
         self.relu = nn.ReLU()
