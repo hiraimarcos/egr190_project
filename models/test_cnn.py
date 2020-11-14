@@ -6,7 +6,7 @@ class CNN_1CONV(nn.Module):
         super().__init__()
         # 1d convolutional layer
         self.conv = nn.Conv1d(
-            in_channels, 100,
+            in_channels, out_channels,
             kernel_size=kernel_size,
             padding=math.floor(kernel_size/2),
         )
