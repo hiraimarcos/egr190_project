@@ -7,7 +7,7 @@ class CNN_1CONV_MAX_NONSTATIC(nn.Module):
         super().__init__()
         self.vocab = dict()
         self.vocab['<pad>'] = 0 # begin by including this word
-        self.vocab_max = vocab_sizee
+        self.vocab_max = vocab_size
         self.vocab_len = 1 # initialize length to 1
         p.set_options(p.OPT.URL) # remove only URLs
         self.clean = p.clean
@@ -31,7 +31,6 @@ class CNN_1CONV_MAX_NONSTATIC(nn.Module):
 
     def forward(self,x):
         size = len(x)
-        x = self.tokenize(x)
         x = self.embedding(x).transpose(0,1)
         # first convolution
         x = self.conv(x)
@@ -52,21 +51,3 @@ class CNN_1CONV_MAX_NONSTATIC(nn.Module):
 
         # here we use view to make sure the output is a 1d array
         return x.view(size)
-
-    def tokenize(self, text):
-        # initialize list with word indices
-        v = []
-        for word in text:
-            # if word in vocab add word index
-            if word in self.vocab:
-                v.append(self.vocab[word])
-            # if not in vocab but vocab not yet maxed, add to vocab
-            elif self.vocab_len < self.vocab_max:
-                self.vocab[word] = self.vocab_len
-                v.append(self.vocab_len)
-                self.vocab_len += 1
-            # else, just ignore word by adding <pad> instead
-            else:
-                v.append(self.vocab['<pad>'])
-
-        return torch.LongTensor(v)
