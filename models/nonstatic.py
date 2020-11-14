@@ -7,7 +7,7 @@ class CNN_1CONV_MAX_NONSTATIC(nn.Module):
         super().__init__()
         self.vocab = dict()
         self.vocab['<pad>'] = 0 # begin by including this word
-        self.vocab_max = vocab_size
+        self.vocab_max = vocab_sizee
         self.vocab_len = 1 # initialize length to 1
         p.set_options(p.OPT.URL) # remove only URLs
         self.clean = p.clean
@@ -69,4 +69,4 @@ class CNN_1CONV_MAX_NONSTATIC(nn.Module):
             else:
                 v.append(self.vocab['<pad>'])
 
-        return torch.Tensor(v).long()
+        return torch.LongTensor(v)
