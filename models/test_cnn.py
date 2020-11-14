@@ -72,7 +72,7 @@ class CNN_2CONV(nn.Module):
 
         # flatten feature maps
         x = self.flatten(x)
-
+        print(x.shape)
         # first fully connected layer
         x = self.fc1(x)
         x = self.relu(x)
