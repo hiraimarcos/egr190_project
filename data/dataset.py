@@ -4,7 +4,6 @@ import pandas as pd
 import preprocessor as p
 import numpy as np
 from torch.utils.data import Dataset
-from .embedding import word2vec
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -63,7 +62,7 @@ class TweeterData(Dataset):
     # cleans the tweet and return split version
     def tokenize(self, text):
         #  remove urls
-        text = self.clean(text)
+        text = self.clean(text).lower()
 
         # remove all but alphanumeric and spaces and split tweet
         text = self.pattern.sub("", text).split()
@@ -82,3 +81,5 @@ class TweeterData(Dataset):
         vectors = torch.tensor(np.stack(vectors))
         vectors = vectors.t() # this is done to correct dimensions
         return vectors
+
+TweeterDataStatic = TweeterData
