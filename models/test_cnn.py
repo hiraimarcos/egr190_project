@@ -6,10 +6,9 @@ class CNN_1CONV(nn.Module):
         super().__init__()
         # 1d convolutional layer
         self.conv = nn.Conv1d(
-            in_channels=in_channels,
+            in_channels, 100,
             kernel_size=kernel_size,
             padding=math.floor(kernel_size/2),
-            out_chanels=100
         )
         conv1_out = math.floor((in_length+2*math.floor(kernel_size/2)-kernel_size) + 1)
         self.maxpool = nn.MaxPool1d(kernel_size=5)
@@ -47,8 +46,7 @@ class CNN_2CONV(nn.Module):
         self.relu = nn.ReLU()
         self.flatten = nn.Flatten()
         self.conv1 = nn.Conv1d(
-            in_channels = 200,
-            out_chanels = 200,
+            200, 200,
             kernel_size = kernel_size,
             padding = math.floor(kernel_size/2),
         )
