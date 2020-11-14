@@ -59,7 +59,7 @@ class TweeterDataNonstatic(Dataset):
     # cleans the tweet and return split version
     def tokenize(self, text):
         #  remove urls
-        text = self.clean(text)
+        text = self.clean(text).lower()
 
         # remove all but alphanumeric and spaces and split tweet
         text = self.pattern.sub("", text).split()

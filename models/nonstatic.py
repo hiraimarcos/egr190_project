@@ -53,16 +53,6 @@ class CNN_1CONV_MAX_NONSTATIC(nn.Module):
         return x.view(size)
 
     def tokenize(self, text):
-        # remove anwanted characters and split
-        x = text.lower()
-        x = self.clean(x)
-        x = self.patter.sub("").split()
-        # pad or crop to make sure all examples have same len
-        if len(x) > self.input_length:
-            x = x[:self.input_length]
-        elif len(x) < self.input_length:
-            pad = ['<pad>' for _ in range(self.example_length-len(text))]
-            x = x + pad
         # initialize list with word indices
         v = []
         for word in x:
