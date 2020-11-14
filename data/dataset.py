@@ -23,6 +23,7 @@ class TweeterData(Dataset):
 
         # maps index of points in the dataset to tweet_ids
         self.index = pd.read_csv(index, index_col=0)
+        self.len = len(self.index)
 
         # cleans tweet before we can tokenize
         p.set_options(p.OPT.URL) # remove only URLs
