@@ -56,8 +56,7 @@ class CNN_2CONV(nn.Module):
             kernel_size=5,
             stride=5
         )
-        conv2_out = math.floor((100-5)/5 + 1)
-        self.fc1 = nn.Linear(conv2_out * 100, 200)
+        self.fc1 = nn.Linear(600, 200)
         self.fc2 = nn.Linear(200, 1)
 
     def forward(self, x):
