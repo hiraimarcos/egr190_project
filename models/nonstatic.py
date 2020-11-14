@@ -62,7 +62,7 @@ class CNN_1CONV_MAX_NONSTATIC(nn.Module):
             # if not in vocab but vocab not yet maxed, add to vocab
             elif self.vocab_len < self.vocab_max:
                 self.vocab[word] = self.vocab_len
-                v.append(vocab_len)
+                v.append(self.vocab_len)
                 self.vocab_len += 1
             # else, just ignore word by adding <pad> instead
             else:
