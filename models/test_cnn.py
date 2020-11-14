@@ -22,9 +22,6 @@ class CNN_1CONV(nn.Module):
         x = self.conv(x)
         x = self.relu(x)
 
-        # maxpool
-        x = self.maxpool(x)
-
         # flatten output maps
         x = self.flatten(x)
 
