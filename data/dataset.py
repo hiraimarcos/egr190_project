@@ -72,7 +72,7 @@ class TweeterData(Dataset):
             text = text[:self.example_length]
         if len(text) < self.example_length:
             pad = ['<pad>' for _ in range(self.example_length-len(text))]
-            text += pad
+            text = text + pad
         return text
 
     # returns tensor with word embeddings from a list of words

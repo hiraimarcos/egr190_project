@@ -29,7 +29,7 @@ class TweeterDataNonstatic(Dataset):
         self.clean = p.clean
 
         # patter that identifies all but alphanumeric characters and spaces
-        self.pattern = re.compile(r'([^\s\w]|_)+')
+        self.pattern = re.compile(r'([^\s\w\#\@])+')
 
     def __len__(self):
         return len(self.index)
