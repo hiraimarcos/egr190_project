@@ -2,7 +2,7 @@ import torch.nn as nn
 import math, torch
 import preprocessor as p
 
-class CNN_1CONV_MAX(nn.Module):
+class CNN_1CONV_MAX_NONSTATIC(nn.Module):
     def __init__(self, kernel_size=3, in_length=30, vocab_size=100000, embedding_dim=30):
         super().__init__()
         self.vocab = dict()
