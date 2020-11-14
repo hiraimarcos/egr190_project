@@ -1,5 +1,5 @@
 import torch.nn as nn
-import math, torch
+import math, torch, re
 import preprocessor as p
 
 class CNN_1CONV_MAX_NONSTATIC(nn.Module):
