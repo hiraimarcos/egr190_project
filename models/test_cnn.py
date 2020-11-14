@@ -52,8 +52,7 @@ class CNN_2CONV(nn.Module):
         )
         conv1_out = math.floor((in_length+2*math.floor(kernel_size/2)-kernel_size) + 1)
         self.conv2 = nn.Conv1d(
-            in_channels=200,
-            out_chanels=100,
+            200, 100,
             kernel_size=5,
             stride=5
         )
