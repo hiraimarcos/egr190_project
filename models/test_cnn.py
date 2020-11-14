@@ -2,19 +2,19 @@ import torch.nn as nn
 import math
 
 class CNN_1CONV(nn.Module):
-    def __init__(self, in_channels, kernel_size, in_length, stride):
+    def __init__(self, in_channels,out_channels, kernel_size, in_length, stride):
         super().__init__()
         # 1d convolutional layer
         self.conv = nn.Conv1d(
-            in_channels, 10000,
+            in_channels, 100,
             kernel_size=kernel_size,
             padding=math.floor(kernel_size/2),
         )
         conv1_out = math.floor((in_length+2*math.floor(kernel_size/2)-kernel_size) + 1)
         self.relu = nn.ReLU()
         self.flatten = nn.Flatten()
-        self.fc1 = nn.Linear(conv1_out * 10000, 100)
-        self.fc2 = nn.Linear(100, 1)
+        self.fc1 = nn.Linear(conv1_out * out_channels, 1000)
+        self.fc2 = nn.Linear(1000, 1)
 
     def forward(self,x):
         size = len(x)
