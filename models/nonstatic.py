@@ -55,7 +55,7 @@ class CNN_1CONV_MAX_NONSTATIC(nn.Module):
     def tokenize(self, text):
         # initialize list with word indices
         v = []
-        for word in x:
+        for word in text:
             # if word in vocab add word index
             if word in self.vocab:
                 v.append(self.vocab[word])
