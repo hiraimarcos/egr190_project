@@ -22,8 +22,7 @@ class TweeterData(Dataset):
         index = os.path.join(self.path, 'index.csv')
 
         # maps index of points in the dataset to tweet_ids
-        self.index = pd.read_csv(index, index_col=0,
-                                    names=['Tweet_id'], header=0)
+        self.index = pd.read_csv(index, index_col=0)
 
         # cleans tweet before we can tokenize
         p.set_options(p.OPT.URL) # remove only URLs
