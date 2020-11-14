@@ -44,7 +44,6 @@ class CNN_1CONV(nn.Module):
 class CNN_2CONV(nn.Module):
     def __init__(self, kernel_size, in_length):
         super().__init__()
-        self.embedding = embedding
         self.relu = nn.ReLU()
         self.flatten = nn.Flatten()
         self.conv1 = nn.Conv1d(
