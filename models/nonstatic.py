@@ -6,14 +6,15 @@ class CNN_1CONV_MAX_NONSTATIC(nn.Module):
     def __init__(self, kernel_size=3, in_length=30, vocab_size=100000, embedding_dim=30):
         super().__init__()
         self.vocab = dict()
-        self.vocab_max = embedding_dim
-        self.vocab_len = 0 # initialize length to 0
+        self.vocab['<pad>'] = 0 # begin by including this word
+        self.vocab_max = vocab_size
+        self.vocab_len = 1 # initialize length to 1
         p.set_options(p.OPT.URL) # remove only URLs
         self.clean = p.clean
         self.pattern = re.compile(r'([^\s\w\@\#])+')
         self.input_length = in_length
-        self.embedding = nn.Embedding(vocab_size, embedding_dim)
 
+        self.embedding = nn.Embedding(vocab_size, embedding_dim)
         # 1d convolutional layer
         self.conv = nn.Conv1d(
             embedding_dim, 300,
