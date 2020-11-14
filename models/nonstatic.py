@@ -3,14 +3,8 @@ import math, torch
 import preprocessor as p
 
 class CNN_1CONV_MAX(nn.Module):
-    def __init__(self, kernel_size=3, in_length=30, stride, vocab_size=10000, embedding_dim=30):
+    def __init__(self, kernel_size=3, in_length=30, vocab_size=100000, embedding_dim=30):
         super().__init__()
-        # 1d convolutional layer
-        self.conv = nn.Conv1d(
-            in_channels, 10000,
-            kernel_size=kernel_size,
-            padding=math.floor(kernel_size/2),
-        )
         self.vocab = dict()
         self.vocab_max = embedding_dim
         self.vocab_len = 0 # initialize length to 0
@@ -20,12 +14,18 @@ class CNN_1CONV_MAX(nn.Module):
         self.input_length = in_length
         self.embedding = nn.Embedding(vocab_size, embedding_dim)
 
+        # 1d convolutional layer
+        self.conv = nn.Conv1d(
+            in_channels, 300,
+            kernel_size=kernel_size,
+            padding=math.floor(kernel_size/2),
+        )
         conv1_out = math.floor((in_length+2*math.floor(kernel_size/2)-kernel_size) + 1)
         self.maxpool = nn.MaxPool1d(kernel_size=5)
         maxpool_out = math.floor(1+(conv1_out-5)/5)
         self.relu = nn.ReLU()
         self.flatten = nn.Flatten()
-        self.fc1 = nn.Linear(maxpool_out * 10000, 100)
+        self.fc1 = nn.Linear(maxpool_out * 300, 100)
         self.fc2 = nn.Linear(100, 1)
 
     def forward(self,x):
