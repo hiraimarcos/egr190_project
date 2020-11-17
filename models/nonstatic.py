@@ -6,7 +6,7 @@ class CNN_2CONV_MAX_NONSTATIC(nn.Module):
     def __init__(self, in_length=30, vocab_size=100000, embedding_dim=30):
         super(CNN_2CONV_MAX_NONSTATIC, self).__init__()
 
-        self.embedding = nn.Embedding(vocab_size, embedding_dim)
+        self.embedding = nn.Embedding(vocab_size, embedding_dim, padding_idx=0)
         # 1d convolutional layer
         self.conv1 = nn.Conv1d(
             embedding_dim, 300,
@@ -55,17 +55,17 @@ class CNN_2CONV_MAX_NONSTATIC(nn.Module):
         return x.view(size)
 
 class CNN_3CONV(nn.Module):
-    def __init__(self, kernel_size, in_length, vocab_size=100000, embedding_dim=30):
+    def __init__(self, in_length, vocab_size=100000, embedding_dim=30):
         super(CNN_3CONV, self).__init__()
         self.relu = nn.ReLU()
         self.flatten = nn.Flatten()
 
-        self.embedding = nn.Embedding(vocab_size, embedding_dim)
+        self.embedding = nn.Embedding(vocab_size, embedding_dim, padding_idx=0)
 
         self.conv1 = nn.Conv1d(
             200, 200,
-            kernel_size = kernel_size,
-            padding = math.floor(kernel_size/2),
+            kernel_size = 3,
+            padding = 1,
         )
         self.maxpool1 = nn.MaxPool1d(2, stride=2)
         conv1_out = math.floor((in_length+2*math.floor(kernel_size/2)-kernel_size) + 1)
