@@ -138,7 +138,7 @@ class CNN_3CONV(nn.Module):
             stride=1,
             padding=1
         )
-        self.fc1 = nn.Linear(3000, 200)
+        self.fc1 = nn.Linear(300, 200)
         self.fc2 = nn.Linear(200, 1)
 
     def forward(self, x):
