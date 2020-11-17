@@ -169,7 +169,6 @@ class CNN_3CONV_MAX(nn.Module):
             padding = 1,
         )
         self.maxpool1 = nn.MaxPool1d(2, stride=2)
-        conv1_out = math.floor((in_length+2*math.floor(kernel_size/2)-kernel_size) + 1)
         self.conv2 = nn.Conv1d(
             200, 100,
             kernel_size=3,
