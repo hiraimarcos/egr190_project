@@ -3,7 +3,7 @@ import math
 
 class CNN_1CONV(nn.Module):
     def __init__(self, in_channels,out_channels, kernel_size, in_length, stride):
-        super().__init__()
+        super(CNN_1CONV, self).__init__()
         # 1d convolutional layer
         self.conv = nn.Conv1d(
             in_channels, out_channels,
@@ -37,7 +37,7 @@ class CNN_1CONV(nn.Module):
 
 class CNN_1CONV_MAX(nn.Module):
     def __init__(self, in_channels, kernel_size, in_length, stride):
-        super().__init__()
+        super(CNN_1CONV_MAX, self).__init__()
         # 1d convolutional layer
         self.conv = nn.Conv1d(
             in_channels, 10000,
@@ -76,7 +76,7 @@ class CNN_1CONV_MAX(nn.Module):
 
 class CNN_2CONV(nn.Module):
     def __init__(self, kernel_size, in_length):
-        super().__init__()
+        super(CNN_2CONV, self).__init__()
         self.relu = nn.ReLU()
         self.flatten = nn.Flatten()
         self.conv1 = nn.Conv1d(
@@ -117,7 +117,7 @@ class CNN_2CONV(nn.Module):
 
 class CNN_3CONV(nn.Module):
     def __init__(self, kernel_size, in_length):
-        super().__init__()
+        super(CNN_3CONV, self).__init__()
         self.relu = nn.ReLU()
         self.flatten = nn.Flatten()
         self.conv1 = nn.Conv1d(
