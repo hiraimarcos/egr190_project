@@ -84,6 +84,7 @@ class CNN_2CONV(nn.Module):
             kernel_size = kernel_size,
             padding = math.floor(kernel_size/2),
         )
+        self.maxpool1 = nn.MaxPool1d(3, stride=3)
         conv1_out = math.floor((in_length+2*math.floor(kernel_size/2)-kernel_size) + 1)
         self.conv2 = nn.Conv1d(
             300, 100,
@@ -91,7 +92,8 @@ class CNN_2CONV(nn.Module):
             stride=1,
             padding=1
         )
-        self.fc1 = nn.Linear(3000, 200)
+        self.maxpool2 = nn.MaxPool1d(3, stride=3, padding=1)
+        self.fc1 = nn.Linear(400, 200)
         self.fc2 = nn.Linear(200, 1)
 
     def forward(self, x):
@@ -99,10 +101,12 @@ class CNN_2CONV(nn.Module):
         # first convolutional layer
         x = self.conv1(x)
         x = self.relu(x)
+        x = self.maxpool1(x)
 
         # second convolutional layer
         x = self.conv2(x)
         x = self.relu(x)
+        x = self.maxpool2(x)
 
         # flatten feature maps
         x = self.flatten(x)
@@ -125,6 +129,7 @@ class CNN_3CONV(nn.Module):
             kernel_size = kernel_size,
             padding = math.floor(kernel_size/2),
         )
+        self.maxpool1 = nn.MaxPool1d(2, stride=2)
         conv1_out = math.floor((in_length+2*math.floor(kernel_size/2)-kernel_size) + 1)
         self.conv2 = nn.Conv1d(
             200, 100,
@@ -132,13 +137,15 @@ class CNN_3CONV(nn.Module):
             stride=1,
             padding=1
         )
+        self.maxpool2 = nn.MaxPool1d(2, stride=2, padding=1)
         self.conv3 = nn.Conv1d(
             100, 100,
-            kernel_size=3,
+            kernel_size=2,
             stride=1,
             padding=1
         )
-        self.fc1 = nn.Linear(3000, 200)
+        self.maxpool3 = nn.MaxPool1d(2, stride=2)
+        self.fc1 = nn.Linear(400, 200)
         self.fc2 = nn.Linear(200, 1)
 
     def forward(self, x):
@@ -146,14 +153,17 @@ class CNN_3CONV(nn.Module):
         # first convolutional layer
         x = self.conv1(x)
         x = self.relu(x)
+        x = self.maxpool1(x)
 
         # second convolutional layer
         x = self.conv2(x)
         x = self.relu(x)
+        x = self.maxpool2(x)
 
         # third convolutional layer
         x = self.conv3(x)
         x = self.relu(x)
+        x = self.maxpool3(x)
 
         # flatten feature maps
         x = self.flatten(x)
