@@ -164,20 +164,20 @@ class CNN_3CONV_MAX(nn.Module):
         self.relu = nn.ReLU()
         self.flatten = nn.Flatten()
         self.conv1 = nn.Conv1d(
-            in_channels, 200,
+            in_channels, 300,
             kernel_size = 3,
             padding = 1,
         )
         self.maxpool1 = nn.MaxPool1d(2, stride=2)
         self.conv2 = nn.Conv1d(
-            200, 100,
+            300, 200,
             kernel_size=3,
             stride=1,
             padding=1
         )
         self.maxpool2 = nn.MaxPool1d(2, stride=2, padding=1)
         self.conv3 = nn.Conv1d(
-            100, 100,
+            200, 100,
             kernel_size=2,
             stride=1,
             padding=1
@@ -221,7 +221,7 @@ class CNN_3CONV(nn.Module):
         self.flatten = nn.Flatten()
         self.conv1 = nn.Conv1d(
             in_channels, 200,
-            kernel_size = kernel_size,
+            kernel_size = 3,
             padding = 1,
         )
         self.conv2 = nn.Conv1d(
