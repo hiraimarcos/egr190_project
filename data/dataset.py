@@ -24,7 +24,7 @@ class TweeterData(Dataset):
         self.index = pd.read_csv(index, index_col=0)
         self.len = len(self.index)
 
-        # cleans tweet before we can tokenize
+        # define method for deleting urls
         p.set_options(p.OPT.URL) # remove only URLs
         self.clean = p.clean
 
@@ -38,14 +38,14 @@ class TweeterData(Dataset):
         return len(self.index)
 
 
-    # Returns the tokenized text and label of the entry with the given id
+    # Returns data point as tensor and the associated label
     def __getitem__(self, id):
         # get tweet id from index
         tweet_id = self.index.iloc[id]['Tweet_id']
         label = int(self.index.iloc[id]['Party']=="D")
 
         # check whether this tweet was made by republican or democrat
-        # and get the text
+        # and get the text from the corresponding directory
         filename = f"{tweet_id}.txt"
         if label:
             path = os.path.join(self.path, "democrat", filename)
@@ -79,7 +79,8 @@ class TweeterData(Dataset):
     def embed(self, tweet):
         vectors = [self.embeddings[word] for word in tweet]
         vectors = torch.tensor(np.stack(vectors))
-        vectors = vectors.t() # this is done to correct dimensions
+        # correct the dimensions so that shape is [channels, length]
+        vectors = vectors.t()
         return vectors
 
 TweeterDataStatic = TweeterData
