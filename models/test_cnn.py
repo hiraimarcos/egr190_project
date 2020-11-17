@@ -76,7 +76,7 @@ class CNN_1CONV_MAX(nn.Module):
 
 class CNN_2CONV_MAX(nn.Module):
     def __init__(self, in_channels):
-        super(CNN_2CONV, self).__init__()
+        super(CNN_2CONV_MAX, self).__init__()
         self.relu = nn.ReLU()
         self.flatten = nn.Flatten()
         self.conv1 = nn.Conv1d(
@@ -142,12 +142,10 @@ class CNN_2CONV(nn.Module):
         # first convolutional layer
         x = self.conv1(x)
         x = self.relu(x)
-        x = self.maxpool1(x)
 
         # second convolutional layer
         x = self.conv2(x)
         x = self.relu(x)
-        x = self.maxpool2(x)
 
         # flatten feature maps
         x = self.flatten(x)
@@ -162,7 +160,7 @@ class CNN_2CONV(nn.Module):
 
 class CNN_3CONV_MAX(nn.Module):
     def __init__(self, in_channels):
-        super(CNN_3CONV, self).__init__()
+        super(CNN_3CONV_MAX, self).__init__()
         self.relu = nn.ReLU()
         self.flatten = nn.Flatten()
         self.conv1 = nn.Conv1d(
@@ -247,17 +245,14 @@ class CNN_3CONV(nn.Module):
         # first convolutional layer
         x = self.conv1(x)
         x = self.relu(x)
-        x = self.maxpool1(x)
 
         # second convolutional layer
         x = self.conv2(x)
         x = self.relu(x)
-        x = self.maxpool2(x)
 
         # third convolutional layer
         x = self.conv3(x)
         x = self.relu(x)
-        x = self.maxpool3(x)
 
         # flatten feature maps
         x = self.flatten(x)
