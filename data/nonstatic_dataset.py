@@ -49,7 +49,7 @@ class TweeterDataNonstatic(Dataset):
 
         # this function will also pad/crop
         tweets = self.clear_text(text)
-        indices = self.vocab.to_indices(tweets)
+        indices = self.vocab.to_vector(tweets)
         sample = (indices, label)
         return sample
 
@@ -85,20 +85,3 @@ class TweeterDataNonstatic(Dataset):
         with open(path, "r") as f:
             text = f.read()
         return text, label
-
-    # # takes list of words and outputs list of embedding index
-    # def tokenize(self, text):
-    #     v = []
-    #     for word in text:
-    #         # if word in vocab add word index
-    #         if word in self.vocab:
-    #             v.append(self.vocab[word])
-    #         # if not in vocab but vocab not yet maxed, add to vocab
-    #         elif self.vocab_len < self.vocab_max:
-    #             self.vocab[word] = self.vocab_len
-    #             v.append(self.vocab_len)
-    #             self.vocab_len += 1
-    #         # else, just ignore word by adding <pad> instead
-    #         else:
-    #             v.append(self.vocab['<pad>'])
-    #     return torch.LongTensor(v)

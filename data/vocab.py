@@ -24,6 +24,6 @@ class Vocab:
             return 0
 
     # takes as input list of words and returns the associated numbers
-    def to_indices(self, words):
+    def to_vector(self, words):
         v = [self.get_index(w) for w in words]
         return torch.LongTensor(v)
