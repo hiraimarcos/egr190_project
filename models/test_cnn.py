@@ -216,7 +216,7 @@ class CNN_3CONV_MAX(nn.Module):
 
 class CNN_3CONV_MAX_v2(nn.Module):
     def __init__(self, in_channels):
-        super(CNN_3CONV_MAX, self).__init__()
+        super(CNN_3CONV_MAX_v2, self).__init__()
         self.relu = nn.ReLU()
         self.flatten = nn.Flatten()
         self.conv1 = nn.Conv1d(
@@ -322,7 +322,7 @@ class CNN_3CONV(nn.Module):
 
 class CNN_4CONV_MAX(nn.Module):
     def __init__(self, in_channels):
-        super(CNN_3CONV_MAX, self).__init__()
+        super(CNN_4CONV_MAX, self).__init__()
         self.relu = nn.ReLU()
         self.flatten = nn.Flatten()
         self.conv1 = nn.Conv1d(
