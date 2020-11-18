@@ -30,7 +30,7 @@ class TweeterDataNonstatic(Dataset):
 
         # maps index of points in the dataset to tweet_ids
         self.index = pd.read_csv(index, index_col=0)
-        self.index = self.index.drop(619056)
+        self.index = self.index.drop([619056])
         self.index = self.index.reset_index(drop=False)
         self.len = len(self.index)
 
