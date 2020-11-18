@@ -14,10 +14,12 @@ class TweeterDataNonstatic(Dataset):
     When creating an instance of this dataset, select test, val, or train
     as the setname
     """
-    def __init__(self, setname, example_length=30, vocab_size=100000):
+    def __init__(self, setname, example_length=30, vocab_size=100000, vocab=None):
         assert setname in ['train1', 'train2', 'train3', 'train4','train', 'test', 'val']
-
-        self.vocab = Vocab(vocab_size=100000)
+        if vocab is None:
+            self.vocab = Vocab(vocab_size=vocab_size)
+        else:
+            self.vocab = vocab
 
         p.set_options(p.OPT.URL) # remove only URLs
         self.clean = p.clean
