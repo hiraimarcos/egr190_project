@@ -57,7 +57,7 @@ class CNN_2CONV_MAX_NONSTATIC(nn.Module):
         return x.view(size)
 
 class CNN_3CONV_MAX_NONSTATIC(nn.Module):
-    def __init__(self, in_length, vocab_size=100000, embedding_dim=30, dropout=0.15):
+    def __init__(self, in_length=30, vocab_size=100000, embedding_dim=30, dropout=0.15):
         super(CNN_3CONV_MAX_NONSTATIC, self).__init__()
         self.relu = nn.ReLU()
         self.flatten = nn.Flatten()
@@ -122,7 +122,7 @@ class CNN_3CONV_MAX_NONSTATIC(nn.Module):
         return x.view(size)
 
 class CNN_4CONV_MAX_NONSTATIC(nn.Module):
-    def __init__(self, in_length, vocab_size=100000, embedding_dim=30, dropout=0.15):
+    def __init__(self, in_length=30, vocab_size=100000, embedding_dim=30, dropout=0.15):
         super(CNN_4CONV_MAX_NONSTATIC, self).__init__()
         self.relu = nn.ReLU()
         self.flatten = nn.Flatten()
