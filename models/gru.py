@@ -20,11 +20,7 @@ class STATIC_GRU(nn.Module):
         """
         Input will be of shape (batch, seq_length, embedding_sie)
         """
-        print(x.shape)
         _, x = self.gru(x)
-        print(x.shape)
-        x = self.flatten(x)
-        print(x.shape)
         x = self.relu(self.fc1(x))
         x = self.fc2(x)
 
