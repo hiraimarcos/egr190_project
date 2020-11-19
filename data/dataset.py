@@ -13,7 +13,7 @@ class TweeterData(Dataset):
     When creating an instance of this dataset, select test, val, or train
     as the setname
     """
-    def __init__(self, setname, embeddings, example_length=30):
+    def __init__(self, setname, embeddings, example_length=30, range=None):
         assert setname in ['train1', 'train2', 'train3', 'train4','train', 'test', 'val']
         self.example_length = example_length
         self.setname = setname
@@ -22,6 +22,10 @@ class TweeterData(Dataset):
 
         # maps index of points in the dataset to tweet_ids
         self.index = pd.read_csv(index, index_col=0)
+        if range is not None and len(range)==2:
+            start = range[0]
+            end = range[1]
+            self.index = self.index[start:end].reset_index()
         self.len = len(self.index)
 
         # define method for deleting urls
@@ -89,7 +93,7 @@ class TweeterDataSequential(Dataset):
     When creating an instance of this dataset, select test, val, or train
     as the setname
     """
-    def __init__(self, setname, embeddings, example_length=30):
+    def __init__(self, setname, embeddings, example_length=30, range=None):
         assert setname in ['train1', 'train2', 'train3', 'train4','train', 'test', 'val']
         self.example_length = example_length
         self.setname = setname
@@ -98,6 +102,10 @@ class TweeterDataSequential(Dataset):
 
         # maps index of points in the dataset to tweet_ids
         self.index = pd.read_csv(index, index_col=0)
+        if range is not None and len(range)==2:
+            start = range[0]
+            end = range[1]
+            self.index = self.index[start:end].reset_index()
         self.len = len(self.index)
 
         # define method for deleting urls

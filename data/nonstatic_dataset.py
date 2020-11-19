@@ -14,7 +14,7 @@ class TweeterDataNonstatic(Dataset):
     When creating an instance of this dataset, select test, val, or train
     as the setname
     """
-    def __init__(self, setname, example_length=30, vocab_size=100000, vocab=None):
+    def __init__(self, setname, example_length=30, vocab_size=100000, vocab=None, range=None):
         assert setname in ['train1', 'train2', 'train3', 'train4','train', 'test', 'val']
         if vocab is None:
             self.vocab = Vocab(vocab_size=vocab_size)
@@ -32,6 +32,10 @@ class TweeterDataNonstatic(Dataset):
 
         # maps index of points in the dataset to tweet_ids
         self.index = pd.read_csv(index, index_col=0)
+        if range is not None and len(range)==2:
+            start = range[0]
+            end = range[1]
+            self.index = self.index[start:end].reset_index()
         self.len = len(self.index)
 
         # cleans tweet before we can tokenize
