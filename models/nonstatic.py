@@ -303,6 +303,6 @@ class TextClassifier(nn.ModuleList):
        # Dropout is applied
        out = self.dropout(out)
        # Activation function is applied
-       out = torch.sigmoid(out)
+       # out = torch.sigmoid(out)
 
        return out.squeeze()
