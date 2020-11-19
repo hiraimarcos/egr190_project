@@ -66,7 +66,7 @@ class NONSTATIC_GRU_BIDIRECTIONAL(nn.Module):
 
         self.gru = nn.GRU(
         input_size=embedding_size, hidden_size=hidden_size,
-        batch_first=batch_first, bidirectional=True
+        batch_first=True, bidirectional=True
         )
 
         self.flatten = nn.Flatten()
