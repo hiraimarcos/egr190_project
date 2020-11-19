@@ -182,9 +182,9 @@ class CNN_4CONV_MAX_NONSTATIC_v2(nn.Module):
         x = self.maxpool3(x)
 
         # fourth convolutional layer
-        x = self.conv3(x)
+        x = self.conv4(x)
         x = self.relu(x)
-        x = self.maxpool3(x)
+        x = self.maxpool4(x)
 
         # flatten feature maps
         x = self.flatten(x)
