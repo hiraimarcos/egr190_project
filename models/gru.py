@@ -81,7 +81,7 @@ class NONSTATIC_GRU_BIDIRECTIONAL(nn.Module):
         size = len(x)
         x = self.embedding(x)
         _, x = self.gru(x)
-        x = self.flatten(x.t(0,1))
+        x = self.flatten(x.transpose(0,1))
         x = self.dropout(x)
         x = self.relu(self.fc1(x))
         x = self.dropout(x)
