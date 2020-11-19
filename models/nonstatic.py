@@ -123,7 +123,7 @@ class CNN_3CONV_MAX_NONSTATIC(nn.Module):
 
 class CNN_4CONV_MAX_NONSTATIC_v2(nn.Module):
     def __init__(self, in_length=30, vocab_size=100000, embedding_dim=64, dropout=0.25):
-        super(CNN_3CONV_MAX_NONSTATIC, self).__init__()
+        super(CNN_4CONV_MAX_NONSTATIC_v2, self).__init__()
         self.relu = nn.ReLU()
         self.flatten = nn.Flatten()
         self.dropout = nn.Dropout(dropout)

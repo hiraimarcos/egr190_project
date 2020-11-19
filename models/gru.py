@@ -56,7 +56,7 @@ class NONSTATIC_GRU(nn.Module):
 
 class NONSTATIC_GRU_BIDIRECTIONAL(nn.Module):
     def __init__(self, embedding_size, hidden_size, batch_first=True, vocab_size=100000):
-        super(NONSTATIC_GRU, self).__init__()
+        super(NONSTATIC_GRU_BIDIRECTIONAL, self).__init__()
 
         self.embedding = nn.Embedding(vocab_size, embedding_size, padding_idx=0)
         self.relu = nn.ReLU()
