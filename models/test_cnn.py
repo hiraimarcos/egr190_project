@@ -333,33 +333,33 @@ class CNN_4CONV_MAX(nn.Module):
         self.flatten = nn.Flatten()
         self.dropout = nn.Dropout(dropout)
         self.conv1 = nn.Conv1d(
-            in_channels, 100,
+            in_channels, 50,
             kernel_size = 3,
             padding = 1,
         )
         self.maxpool1 = nn.MaxPool1d(2, stride=2)
         self.conv2 = nn.Conv1d(
-            100, 200,
+            50, 100,
             kernel_size=3,
             stride=1,
             padding=1
         )
         self.maxpool2 = nn.MaxPool1d(2, stride=2, padding=1)
         self.conv3 = nn.Conv1d(
-            200, 400,
+            100, 200,
             kernel_size=2,
             stride=1,
             padding=1
         )
         self.maxpool3 = nn.MaxPool1d(2, stride=2)
         self.conv4 = nn.Conv1d(
-            400, 800,
+            200, 400,
             kernel_size=2,
             stride=1,
             padding=1
         )
         self.maxpool4 = nn.MaxPool1d(2, stride=2)
-        self.fc1 = nn.Linear(1600, 200)
+        self.fc1 = nn.Linear(800, 200)
         self.fc2 = nn.Linear(200, 1)
 
     def forward(self, x):

@@ -144,20 +144,20 @@ class CNN_4CONV_MAX_NONSTATIC(nn.Module):
         )
         self.maxpool2 = nn.MaxPool1d(2, stride=2, padding=1)
         self.conv3 = nn.Conv1d(
-            100, 400,
+            100, 200,
             kernel_size=2,
             stride=1,
             padding=1
         )
         self.maxpool3 = nn.MaxPool1d(2, stride=2)
         self.conv4 = nn.Conv1d(
-            400, 800,
+            200, 400,
             kernel_size=2,
             stride=1,
             padding=1
         )
         self.maxpool4 = nn.MaxPool1d(2, stride=2)
-        self.fc1 = nn.Linear(1600, 200)
+        self.fc1 = nn.Linear(800, 200)
         self.fc2 = nn.Linear(200, 1)
 
     def forward(self, x):
